@@ -8,7 +8,7 @@ en UDP simple
 import SocketServer
 import sys
 
-direc_ip = {}
+diccionario = {}
 
 
 class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
@@ -36,11 +36,25 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
             if metodo == "REGISTER":
                 direc = lista[1].split(":")[1]
                 print "direccion: " + str(direc) + "\r"
-                direc_ip[direc] = ip_port[0]
-                print "diccionario: " + str(direc_ip) + "\r"
-                respuesta = "SIP/1.0 200 OK \r\n\r\n"
+                expires = int(lista[4])
+                print "expires: " + str(expires) + "\r"
+                
+                if expires > 0: 
+                    if not direc in diccionario:
+                        print "entra en el diccionario: " + str(direc) + "\r"  
+                    diccionario[direc] = ip_port[0]
+                    print "diccionario: " + str(diccionario) + "\r"   
+                else:
+                    if direc in diccionario:
+                        del diccionario[direc] 
+                        print "borro del diccionario a: " + str(direc) + "\r"  
+                        if diccionario:   
+                            print "diccionario: " + str(diccionario) + "\r"                      
+                    
+                respuesta = "SIP/2.0 200 OK \r\n\r\n"
             else:
-                respuesta = "SIP/1.0 400 Bad Request \r\n\r\n"
+                respuesta = "SIP/2.0 400 Bad Request \r\n\r\n"
+                
             print "\r\nRespondo al cliente: " + respuesta
             self.wfile.write(respuesta)
 
