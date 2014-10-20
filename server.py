@@ -38,23 +38,23 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
                 print "direccion: " + str(direc) + "\r"
                 expires = int(lista[4])
                 print "expires: " + str(expires) + "\r"
-                
-                if expires > 0: 
+
+                if expires > 0:
                     if not direc in diccionario:
-                        print "entra en el diccionario: " + str(direc) + "\r"  
+                        print "entra en el diccionario: " + str(direc) + "\r"
                     diccionario[direc] = ip_port[0]
-                    print "diccionario: " + str(diccionario) + "\r"   
+                    print "diccionario: " + str(diccionario) + "\r"
                 else:
                     if direc in diccionario:
-                        del diccionario[direc] 
-                        print "borro del diccionario a: " + str(direc) + "\r"  
-                        if diccionario:   
-                            print "diccionario: " + str(diccionario) + "\r"                      
-                    
+                        del diccionario[direc]
+                        print "borro del diccionario a: " + str(direc) + "\r"
+                        if diccionario:
+                            print "diccionario: " + str(diccionario) + "\r"
+
                 respuesta = "SIP/2.0 200 OK \r\n\r\n"
             else:
                 respuesta = "SIP/2.0 400 Bad Request \r\n\r\n"
-                
+
             print "\r\nRespondo al cliente: " + respuesta
             self.wfile.write(respuesta)
 
