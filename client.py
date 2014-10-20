@@ -14,7 +14,10 @@ SERVER = sys.argv[1]
 PORT = int(sys.argv[2])
 
 # Contenido que vamos a enviar
-LINE = ' '.join(sys.argv[3:])
+METODO = sys.argv[3].upper()
+DIREC = sys.argv[4]
+
+LINE = METODO + " sip:" + DIREC + " SIP/1.0" + "\r\n"
 
 # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
