@@ -10,6 +10,7 @@ import sys
 
 direc_ip = {}
 
+
 class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
     """
     SIP server class
@@ -25,23 +26,23 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
                 break
 
             print "El cliente nos manda " + line
-            
+
             # Mientras que la línea no esté vacía
             lista = line.split()
             print "lista: " + str(lista) + "\r"
             metodo = lista[0]
             print "metodo: " + str(metodo) + "\r"
-            
-            if metodo == "REGISTER": 
+
+            if metodo == "REGISTER":
                 direc = lista[1].split(":")[1]
                 print "direccion: " + str(direc) + "\r"
                 direc_ip[direc] = ip_port[0]
-                print "diccionario: " + str(direc_ip) + "\r\n"        
-                self.wfile.write("SIP/1.0 200 OK \r\n\r\n")
-                print "Respondo al cliente: SIP/1.0 200 OK \r\n\r\n"
+                print "diccionario: " + str(direc_ip) + "\r"
+                respuesta = "SIP/1.0 200 OK \r\n\r\n"
             else:
-                self.wfile.write("SIP/1.0 400 Bad Request \r\n\r\n")
-                print "Respondo al cliente: SIP/1.0 400 Bad Request \r\n\r\n"
+                respuesta = "SIP/1.0 400 Bad Request \r\n\r\n"
+            print "\r\nRespondo al cliente: " + respuesta
+            self.wfile.write(respuesta)
 
 if __name__ == "__main__":
     PORT = int(sys.argv[1])
