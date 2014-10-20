@@ -1,34 +1,51 @@
 #!/usr/bin/python
 # -*- coding: iso-8859-15 -*-
 """
-Clase (y programa principal) para un servidor de eco
+Clase (y programa principal) para un servidor de sip
 en UDP simple
 """
 
 import SocketServer
 import sys
 
-PORT = int(sys.argv[1])
+direc_ip = {}
 
-
-class EchoHandler(SocketServer.DatagramRequestHandler):
+class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
     """
-    Echo server class
+    SIP server class
     """
 
     def handle(self):
-        # Escribe dirección y puerto del cliente (de tupla client_address)
-        print self.client_address
-        self.wfile.write("Hemos recibido tu peticion")
+        # Tomo dirección y puerto del cliente (de tupla client_address)
+        ip_port = self.client_address
         while 1:
             # Leyendo línea a línea lo que nos envía el cliente
             line = self.rfile.read()
-            print "El cliente nos manda " + line
             if not line:
                 break
 
+            print "El cliente nos manda " + line
+            
+            # Mientras que la línea no esté vacía
+            lista = line.split()
+            print "lista: " + str(lista) + "\r"
+            metodo = lista[0]
+            print "metodo: " + str(metodo) + "\r"
+            
+            if metodo == "REGISTER": 
+                direc = lista[1].split(":")[1]
+                print "direccion: " + str(direc) + "\r"
+                direc_ip[direc] = ip_port[0]
+                print "diccionario: " + str(direc_ip) + "\r\n"        
+                self.wfile.write("SIP/1.0 200 OK \r\n\r\n")
+                print "Respondo al cliente: SIP/1.0 200 OK \r\n\r\n"
+            else:
+                self.wfile.write("SIP/1.0 400 Bad Request \r\n\r\n")
+                print "Respondo al cliente: SIP/1.0 400 Bad Request \r\n\r\n"
+
 if __name__ == "__main__":
+    PORT = int(sys.argv[1])
     # Creamos servidor de eco y escuchamos
-    serv = SocketServer.UDPServer(("", PORT), EchoHandler)
-    print "Lanzando servidor UDP de eco..."
+    serv = SocketServer.UDPServer(("", PORT), SIPRegisterHandler)
+    print "\nLanzando servidor UDP de SIP... \r\n"
     serv.serve_forever()
