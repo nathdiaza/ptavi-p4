@@ -19,6 +19,7 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
         while 1:
             # Leyendo línea a línea lo que nos envía el cliente
             line = self.rfile.read()
+            print self.client_address
             print "El cliente nos manda " + line
             if not line:
                 break
