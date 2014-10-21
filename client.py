@@ -15,8 +15,11 @@ try:
     PORT = int(sys.argv[1])
     SERVER = str(sys.argv[2])
     # contenido a enviar.
-    for i in sys.argv[3:]:
-        LINE = LINE + str(i) + str(" ")
+    if sys.argv[3] == "register":
+        LINE = "REGISTER" + " sip:" + sys.argv[4] + " SIP/2.0\r\n\r\n"
+    else:
+        for i in sys.argv[3:]:
+            LINE = LINE + str(i) + str(" ")
 except ValueError:
     print "Error: los parametros pasados son erroneos"
     sys.exit()
