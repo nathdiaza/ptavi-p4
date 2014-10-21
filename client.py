@@ -17,11 +17,12 @@ try:
     # contenido a enviar.
     if sys.argv[3] == "register":
         LINE = "REGISTER" + " sip:" + sys.argv[4] + " SIP/2.0\r\n\r\n"
+        time = sys.argv[5]
     else:
         for i in sys.argv[3:]:
             LINE = LINE + str(i) + str(" ")
 except ValueError:
-    print "Error: los parametros pasados son erroneos"
+    print "Usage: client.py ip puerto register sip_address expires_value"
     sys.exit()
 
 # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto

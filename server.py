@@ -33,13 +33,14 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
             if line:
                 if line [0:8] == "REGISTER":
                     self.wfile.write("SIP/2.0 200 OK\r\n\r\n")
-                    d[ip] = puerto
+                    direccion = line.split(":")[1].split(" ")[0]
+                    d[direccion] = ip
                     print d
                 else:
                     self.wfile.write("Hemos recibido tu peticion")
                     print "IP: " + ip + " Port: " + puerto
                     print "El cliente nos manda " + line + "\n"
-            else: # elif not line:
+            else: 
                 break
 
 if __name__ == "__main__":
