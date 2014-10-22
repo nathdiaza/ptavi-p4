@@ -8,26 +8,27 @@ en UDP simple
 import SocketServer
 import sys
 
-class EchoHandler(SocketServer.DatagramRequestHandler):
-
-
-    """
-    Echo server class
-    """
+class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
 
     def handle(self):
-        # Escribe dirección y puerto del cliente (de tupla client_address)
-        self.wfile.write("Hemos recibido tu peticion")
         while 1:
             # Leyendo línea a línea lo que nos envía el cliente
             line = self.rfile.read()
-            print self.client_address
-            print "El cliente nos manda " + line
+            dic_registro = {}
+            if line != "":
+                list_palabras = line.split()
+                recorte = list_palabras[1].split(":")
+                mail = recorte[1]
+                if list_palabras[0] == "REGISTER":
+                    self.wfile.write("SIP/2.0 200 OK\r\n\r\n")
+                    dic_registro[mail] = self.client_address[0]
+                print self.client_address
+                print line
             if not line:
                 break
 
 if __name__ == "__main__":
-    # Creamos servidor de eco y escuchamos
-    serv = SocketServer.UDPServer(("", int(sys.argv[1])), EchoHandler)
-    print "Lanzando servidor UDP de eco..."
+
+    serv = SocketServer.UDPServer(("", int(sys.argv[1])), SIPRegisterHandler)
+    print "Lanzando servidor UDP de eco...\n"
     serv.serve_forever()
