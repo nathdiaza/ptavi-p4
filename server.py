@@ -17,11 +17,18 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
             dic_registro = {}
             if line != "":
                 list_palabras = line.split()
-                recorte = list_palabras[1].split(":")
-                mail = recorte[1]
-                if list_palabras[0] == "REGISTER":
+                if int(list_palabras[4]) != 0:
+                    if list_palabras[0] == "REGISTER":
+                        recorte = list_palabras[1].split(":")
+                        mail = recorte[1]
+                        self.wfile.write("SIP/2.0 200 OK\r\n")
+                        dic_registro[mail] = self.client_address[0]
+                else:
                     self.wfile.write("SIP/2.0 200 OK\r\n\r\n")
+                    recorte = list_palabras[1].split(":")
+                    mail = recorte[1]
                     dic_registro[mail] = self.client_address[0]
+                    del dic_registro[mail]
                 print self.client_address
                 print line
             if not line:
