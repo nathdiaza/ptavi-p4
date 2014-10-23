@@ -12,17 +12,20 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
     """
     Echo server class
     """
-
+    List_Client = {}
     def handle(self):
         # Escribe dirección y puerto del cliente (de tupla client_address)
+   
         while 1:
             # Leyendo línea a línea lo que nos envía el cliente
             line = self.rfile.read()
             print line
             line = line.split()
             if "REGISTER" in line:
-            	print self.client_address
+     
+            	self.List_Client[line[2]] = self.client_address
             	self.wfile.write("SIP/2.0 200 OK\r\n\r\n")
+            	print self.List_Client
             if not line:
                 break
 
