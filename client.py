@@ -12,12 +12,12 @@ import sys
 LINE = ""
 try:
     # puerto y servidor.
-    PORT = int(sys.argv[1])
-    SERVER = str(sys.argv[2])
+    SERVER = str(sys.argv[1])
+    PORT = int(sys.argv[2])
     # contenido a enviar.
     if sys.argv[3] == "register":
-        LINE = "REGISTER" + " sip:" + sys.argv[4] + " SIP/2.0\r\n\r\n"
-        time = sys.argv[5]
+        LINE = "REGISTER" + " sip:" + sys.argv[4] + " SIP/2.0\r\n"
+        LINE = LINE + "Expires: " + sys.argv[5] + "\r\n\r\n"
     else:
         for i in sys.argv[3:]:
             LINE = LINE + str(i) + str(" ")
