@@ -35,8 +35,9 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
                 self.buscar_clientes()
                 if exp == 0:
                     #Borramos al cliente del diccionario
-                    del dic_clients[user]
-                    print "Borramos a :" + user
+                    if user in dic_clients:
+                        del dic_clients[user]
+                        print "Borramos a :" + user
                 else:
                     hora_exp = time.time() + exp
                     formato = '%Y-%m-%d %H:%M:%S'
