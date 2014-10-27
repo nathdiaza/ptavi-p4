@@ -74,7 +74,8 @@ files = ['README.md',
          'client.py',
          'server.py',
          'register.libpcap',
-         '.git']
+         '.git',
+         'check-p4.py']
 
 aleatorio = str(int(random.random() * 1000000))
 
@@ -91,7 +92,7 @@ except OSError:
     print 
     sys.exit()
 
-if len(student_file_list) != 7:
+if len(student_file_list) != 8:
     error = 1
     print "Error: solamente hay que subir al repositorio los ficheros indicados en las guion de practicas, que son en total 7:"
 
