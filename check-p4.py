@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Script de comprobaciÛn de entrega de pr·ctica
+Script de comprobaci√≥n de entrega de pr√°ctica
 
 Para ejecutarlo, desde la shell: 
  $ python check-p4.py login_laboratorio
@@ -14,7 +14,7 @@ import random
 import sys
 
 
-# Diccionario con la relaciÛn de nombres de usuario
+# Diccionario con la relaci√≥n de nombres de usuario
 # en los laboratorios (clave) y nombres de usuario en GitHub (valor)
 github_dict = {
     "iarranz": "igarag",
@@ -74,6 +74,7 @@ files = ['README.md',
          'client.py',
          'server.py',
          'register.libpcap',
+         'check-p4.py',
          '.git']
 
 aleatorio = str(int(random.random() * 1000000))
