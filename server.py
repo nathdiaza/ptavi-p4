@@ -9,11 +9,12 @@ import SocketServer
 import sys
 import time
 
+List_Client = {}
+
 class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
     """
     SIP server class
     """
-    List_Client = {}
     def handle(self):
     
     	for client in List_Client.keys():
@@ -41,7 +42,7 @@ class SIPRegisterHandler(SocketServer.DatagramRequestHandler):
             	self.wfile.write("SIP/2.0 200 OK\r\n\r\n")
             	self.register2file()	
             else:
-            	self.wfile.write("SIP/2.0 400 Bad Request\r\n\r\n"
+            	self.wfile.write("SIP/2.0 400 Bad Request\r\n\r\n")
             if not line:
                 break
                 
